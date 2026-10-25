@@ -15,7 +15,7 @@ export interface IIncentivo {
   descrizione: string;
   valoreIncentivo: number;
   criteriDiIdoneita: string[];
-  starttupAssegnata: IStartup[];
+  startupAssegnata: IStartup[];
 
   // Metodo per assegnare l'incentivo a una startup qualificata.
   assegnaAStartup(startup: IStartup): void;

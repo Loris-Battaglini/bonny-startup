@@ -51,15 +51,7 @@ const verificaPartecipazione = (
     );
     const matchSettore = startup.settore.toLowerCase().includes(interesseLower);
 
-    // Associazione logica extra per interessi specifici ma affini
-    const affinitaGenerica =
-      (interesseLower === "corsa" ||
-        interesseLower === "yoga" ||
-        interesseLower === "pilates") &&
-      (startup.settore.toLowerCase().includes("fitness") ||
-        startup.settore.toLowerCase().includes("sport"));
-
-    return matchServizi || matchSettore || affinitaGenerica;
+    return matchServizi || matchSettore;
   });
 };
 
@@ -76,9 +68,20 @@ testStartupIncentivi.forEach(({ startup, incentivo }) => {
   if (verificaIdoneita(startup, incentivo)) {
     incentivo.assegnaAStartup(startup);
     startup.riceviIncentivo(incentivo);
-    console.log(
-      `✅ [OK] ${startup.nome} è idonea per l'incentivo ${incentivo.codiceIdentificativo}`,
-    );
+
+    // Controllo automatico dello stato negli array
+    const statoAggiornatoStartup =
+      startup.incentiviRicevuti.includes(incentivo);
+    const statoAggiornatoIncentivo =
+      incentivo.startupAssegnata.includes(startup);
+
+    if (statoAggiornatoStartup && statoAggiornatoIncentivo) {
+      console.log(
+        `✅ [OK & STATO] ${startup.nome} è idonea ed è stata registrata correttamente nell'array di stato.`,
+      );
+    } else {
+      console.log(`❌ [ERRORE] Lo stato negli array non è stato aggiornato.`);
+    }
   } else {
     console.log(
       `❌ [NO] ${startup.nome} non soddisfa i criteri per ${incentivo.descrizione}`,
@@ -103,9 +106,30 @@ testCittadiniStartup.forEach(({ cittadino, startup }) => {
     );
   } else {
     console.log(
-      `ℹ️ [NON PARTECIPA] ${cittadino.nome} ${cittadino.cognome} non ha interessi affini a ${startup.nome}.`,
+      `🤔 [NON PARTECIPA] ${cittadino.nome} ${cittadino.cognome} non ha interessi affini a ${startup.nome}.`,
     );
   }
 });
 
-console.log("FINE TEST COMPLETATI CON SUCCESSO");
+// TEST NEGATIVO (Per verificare l'esclusione e vedere la ❌)
+console.log("Test Negativo: Startup non idonea");
+
+// Creo una startup fittizia fuori settore
+const startupFittizia = {
+  nome: "Ristorante Da Mario",
+  settore: "Ristorazione e Catering",
+  descrizione: "Cucina tradizionale locale",
+  serviziOfferti: ["Pranzo", "Cena", "Delivery"],
+  incentiviRicevuti: [],
+  riceviIncentivo: () => {},
+};
+
+if (verificaIdoneita(startupFittizia as any, incentivo1)) {
+  console.log(`✅ [OK] ${startupFittizia.nome} è idonea.`);
+} else {
+  console.log(
+    `❌ [TEST NEGATIVO RIUSCITO] La startup "${startupFittizia.nome}" (Settore: ${startupFittizia.settore}) è stata giustamente scartata perché non rispetta i criteri dell'incentivo!`,
+  );
+}
+
+console.log("FINE TEST COMPLETATI");
