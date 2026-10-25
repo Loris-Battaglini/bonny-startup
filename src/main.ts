@@ -115,7 +115,7 @@ testCittadiniStartup.forEach(({ cittadino, startup }) => {
 console.log("Test Negativo: Startup non idonea");
 
 // Creo una startup fittizia fuori settore
-const startupFittizia = {
+const startupFittizia: IStartup = {
   nome: "Ristorante Da Mario",
   settore: "Ristorazione e Catering",
   descrizione: "Cucina tradizionale locale",
@@ -124,7 +124,7 @@ const startupFittizia = {
   riceviIncentivo: () => {},
 };
 
-if (verificaIdoneita(startupFittizia as any, incentivo1)) {
+if (verificaIdoneita(startupFittizia, incentivo1)) {
   console.log(`✅ [OK] ${startupFittizia.nome} è idonea.`);
 } else {
   console.log(

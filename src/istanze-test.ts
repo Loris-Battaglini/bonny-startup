@@ -6,7 +6,7 @@ export const startup1: IStartup = new Startup(
   "SportTech Solutions",
   "Tecnologia sportiva",
   "Offriamo soluzioni innovative per migliorare le prestazioni degli atleti.",
-  ["App di monitoraggio delle prestazioni", "Sensori indossabili"],
+  ["App di monitoraggio delle prestazioni per la corsa", "Sensori indossabili"],
 );
 
 export const startup2: IStartup = new Startup(
