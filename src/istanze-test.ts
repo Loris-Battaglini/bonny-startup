@@ -75,5 +75,3 @@ export const cittadino3: ICittadino = new Cittadino("Luca", "Verdi", 35, [
   "Football",
   "Tennis",
 ]);
-
-console.log("inizio istanze-test.ts");

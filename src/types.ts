@@ -4,6 +4,7 @@ export interface IStartup {
   settore: string;
   descrizione: string;
   serviziOfferti: string[];
+  incentiviRicevuti: IIncentivo[];
 
   // Metodo per ricevere un incentivo.
   riceviIncentivo(incentivo: IIncentivo): void;
@@ -14,6 +15,7 @@ export interface IIncentivo {
   descrizione: string;
   valoreIncentivo: number;
   criteriDiIdoneita: string[];
+  starttupAssegnata: IStartup[];
 
   // Metodo per assegnare l'incentivo a una startup qualificata.
   assegnaAStartup(startup: IStartup): void;

@@ -6,6 +6,9 @@ export class Startup implements IStartup {
   descrizione: string;
   serviziOfferti: string[];
 
+  // proprietà per memorizzare i dati reali
+  incentiviRicevuti: IIncentivo[] = [];
+
   constructor(
     nome: string,
     settore: string,
@@ -19,6 +22,7 @@ export class Startup implements IStartup {
   }
 
   riceviIncentivo(incentivo: IIncentivo): void {
+    this.incentiviRicevuti.push(incentivo);
     console.log(
       `La startup ${this.nome} ha ricevuto l'incentivo: ${incentivo.descrizione}`,
     );
@@ -30,6 +34,9 @@ export class Incentivo implements IIncentivo {
   descrizione: string;
   valoreIncentivo: number;
   criteriDiIdoneita: string[];
+
+  // stato per atracciare assegnazione dell'incentivo
+  startupAssegnata: IStartup[] = [];
 
   constructor(
     codiceIdentificativo: string,
@@ -44,6 +51,7 @@ export class Incentivo implements IIncentivo {
   }
 
   assegnaAStartup(startup: IStartup): void {
+    this.startupAssegnata.push(startup);
     console.log(
       `L'incentivo ${this.descrizione} è stato assegnato alla startup: ${startup.nome}`,
     );
