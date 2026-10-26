@@ -56,7 +56,7 @@ const verificaPartecipazione = (
 };
 
 // TEST 1: ASSEGNAZIONE INCENTIVI
-console.log("\n--- Test Idoneità e Assegnazione Incentivi ---");
+console.log("Test Idoneità e Assegnazione Incentivi");
 
 const testStartupIncentivi = [
   { startup: startup1, incentivo: incentivo1 },
