@@ -12,8 +12,11 @@ export class Startup implements IStartup {
   descrizione: string;
   serviziOfferti: string[];
 
-  // proprietà per memorizzare i dati reali
-  incentiviRicevuti: IIncentivo[] = [];
+  private readonly _incentiviRicevuti: IIncentivo[] = [];
+
+  get incentiviRicevuti(): readonly IIncentivo[] {
+    return this._incentiviRicevuti;
+  }
 
   constructor(
     nome: string,
@@ -30,7 +33,11 @@ export class Startup implements IStartup {
   }
 
   riceviIncentivo(incentivo: IIncentivo): void {
-    this.incentiviRicevuti.push(incentivo);
+    if (this._incentiviRicevuti.includes(incentivo)) {
+      return;
+    }
+
+    this._incentiviRicevuti.push(incentivo);
     console.log(
       `La startup ${this.nome} ha ricevuto l'incentivo: ${incentivo.descrizione}`,
     );
@@ -43,8 +50,11 @@ export class Incentivo implements IIncentivo {
   valoreIncentivo: number;
   criteriDiIdoneita: AreaSportiva[];
 
-  // stato per atracciare assegnazione dell'incentivo
-  startupAssegnata: IStartup[] = [];
+  private readonly _startupAssegnata: IStartup[] = [];
+
+  get startupAssegnata(): readonly IStartup[] {
+    return this._startupAssegnata;
+  }
 
   constructor(
     codiceIdentificativo: string,
@@ -58,11 +68,17 @@ export class Incentivo implements IIncentivo {
     this.criteriDiIdoneita = criteriDiIdoneita;
   }
 
-  assegnaAStartup(startup: IStartup): void {
-    this.startupAssegnata.push(startup);
+  assegnaAStartup(startup: IStartup): boolean {
+    if (this._startupAssegnata.includes(startup)) {
+      return false;
+    }
+
+    this._startupAssegnata.push(startup);
+    startup.riceviIncentivo(this);
     console.log(
       `L'incentivo ${this.descrizione} è stato assegnato alla startup: ${startup.nome}`,
     );
+    return true;
   }
 }
 

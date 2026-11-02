@@ -52,18 +52,24 @@ const testStartupIncentivi = [
 
 testStartupIncentivi.forEach(({ startup, incentivo }) => {
   if (verificaIdoneita(startup, incentivo)) {
-    incentivo.assegnaAStartup(startup);
-    startup.riceviIncentivo(incentivo);
+    const assegnazioneCreata = incentivo.assegnaAStartup(startup);
+    const assegnazioneDuplicata = incentivo.assegnaAStartup(startup);
 
-    // Controllo automatico dello stato negli array
     const statoAggiornatoStartup =
-      startup.incentiviRicevuti.includes(incentivo);
+      startup.incentiviRicevuti.filter((ricevuto) => ricevuto === incentivo)
+        .length === 1;
     const statoAggiornatoIncentivo =
-      incentivo.startupAssegnata.includes(startup);
+      incentivo.startupAssegnata.filter((assegnata) => assegnata === startup)
+        .length === 1;
 
-    if (statoAggiornatoStartup && statoAggiornatoIncentivo) {
+    if (
+      assegnazioneCreata &&
+      !assegnazioneDuplicata &&
+      statoAggiornatoStartup &&
+      statoAggiornatoIncentivo
+    ) {
       console.log(
-        `✅ [OK & STATO] ${startup.nome} è idonea ed è stata registrata correttamente nell'array di stato.`,
+        `✅ [OK & STATO] ${startup.nome} è idonea; l'assegnazione è stata registrata una sola volta su entrambi i lati.`,
       );
     } else {
       console.log(`❌ [ERRORE] Lo stato negli array non è stato aggiornato.`);

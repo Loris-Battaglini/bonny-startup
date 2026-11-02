@@ -13,7 +13,7 @@ export interface IStartup {
   aree: AreaSportiva[];
   descrizione: string;
   serviziOfferti: string[];
-  incentiviRicevuti: IIncentivo[];
+  readonly incentiviRicevuti: readonly IIncentivo[];
 
   // Metodo per ricevere un incentivo.
   riceviIncentivo(incentivo: IIncentivo): void;
@@ -24,10 +24,10 @@ export interface IIncentivo {
   descrizione: string;
   valoreIncentivo: number;
   criteriDiIdoneita: AreaSportiva[];
-  startupAssegnata: IStartup[];
+  readonly startupAssegnata: readonly IStartup[];
 
   // Metodo per assegnare l'incentivo a una startup qualificata.
-  assegnaAStartup(startup: IStartup): void;
+  assegnaAStartup(startup: IStartup): boolean;
 }
 
 export interface ICittadino {
