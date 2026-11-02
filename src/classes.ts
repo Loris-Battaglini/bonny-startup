@@ -13,9 +13,14 @@ export class Startup implements IStartup {
   serviziOfferti: string[];
 
   private readonly _incentiviRicevuti: IIncentivo[] = [];
+  private readonly _cittadiniPartecipanti: ICittadino[] = [];
 
   get incentiviRicevuti(): readonly IIncentivo[] {
     return this._incentiviRicevuti;
+  }
+
+  get cittadiniPartecipanti(): readonly ICittadino[] {
+    return this._cittadiniPartecipanti;
   }
 
   constructor(
@@ -38,9 +43,15 @@ export class Startup implements IStartup {
     }
 
     this._incentiviRicevuti.push(incentivo);
-    console.log(
-      `La startup ${this.nome} ha ricevuto l'incentivo: ${incentivo.descrizione}`,
-    );
+  }
+
+  registraCittadinoPartecipante(cittadino: ICittadino): boolean {
+    if (this._cittadiniPartecipanti.includes(cittadino)) {
+      return false;
+    }
+
+    this._cittadiniPartecipanti.push(cittadino);
+    return true;
   }
 }
 
@@ -75,9 +86,6 @@ export class Incentivo implements IIncentivo {
 
     this._startupAssegnata.push(startup);
     startup.riceviIncentivo(this);
-    console.log(
-      `L'incentivo ${this.descrizione} è stato assegnato alla startup: ${startup.nome}`,
-    );
     return true;
   }
 }
@@ -100,9 +108,7 @@ export class Cittadino implements ICittadino {
     this.interessiSportivi = interessiSportivi;
   }
 
-  partecipaAttività(startup: IStartup): void {
-    console.log(
-      `Il cittadino ${this.nome} ${this.cognome} partecipa all'attività della startup: ${startup.nome}`,
-    );
+  partecipaAttività(startup: IStartup): boolean {
+    return startup.registraCittadinoPartecipante(this);
   }
 }

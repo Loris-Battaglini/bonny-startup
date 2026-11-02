@@ -14,9 +14,11 @@ export interface IStartup {
   descrizione: string;
   serviziOfferti: string[];
   readonly incentiviRicevuti: readonly IIncentivo[];
+  readonly cittadiniPartecipanti: readonly ICittadino[];
 
   // Metodo per ricevere un incentivo.
   riceviIncentivo(incentivo: IIncentivo): void;
+  registraCittadinoPartecipante(cittadino: ICittadino): boolean;
 }
 
 export interface IIncentivo {
@@ -37,5 +39,5 @@ export interface ICittadino {
   interessiSportivi: string[];
 
   // per partecipare alle attività o utilizzare i prodotti/servizi offerti dalla startup.
-  partecipaAttività(startup: IStartup): void;
+  partecipaAttività(startup: IStartup): boolean;
 }

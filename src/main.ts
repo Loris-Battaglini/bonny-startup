@@ -1,5 +1,5 @@
 // interfacce
-import type { IStartup, IIncentivo } from "./types";
+import type { IStartup, IIncentivo, ICittadino } from "./types";
 
 // istanze
 import {
@@ -27,7 +27,7 @@ const verificaIdoneita = (
 
 // Verifica se il cittadino ha almeno un interesse affine ai servizi o al settore della startup
 const verificaPartecipazione = (
-  cittadino: typeof cittadino1,
+  cittadino: ICittadino,
   startup: IStartup,
 ): boolean => {
   return cittadino.interessiSportivi.some((interesse) => {
@@ -54,6 +54,15 @@ testStartupIncentivi.forEach(({ startup, incentivo }) => {
   if (verificaIdoneita(startup, incentivo)) {
     const assegnazioneCreata = incentivo.assegnaAStartup(startup);
     const assegnazioneDuplicata = incentivo.assegnaAStartup(startup);
+
+    if (assegnazioneCreata) {
+      console.log(
+        `La startup ${startup.nome} ha ricevuto l'incentivo: ${incentivo.descrizione}`,
+      );
+      console.log(
+        `L'incentivo ${incentivo.descrizione} è stato assegnato alla startup: ${startup.nome}`,
+      );
+    }
 
     const statoAggiornatoStartup =
       startup.incentiviRicevuti.filter((ricevuto) => ricevuto === incentivo)
@@ -92,9 +101,11 @@ const testCittadiniStartup = [
 
 testCittadiniStartup.forEach(({ cittadino, startup }) => {
   if (verificaPartecipazione(cittadino, startup)) {
-    cittadino.partecipaAttività(startup);
+    const partecipazioneRegistrata = cittadino.partecipaAttività(startup);
     console.log(
-      `✅ [PARTECIPA] ${cittadino.nome} ${cittadino.cognome} parteciperà alle attività.`,
+      partecipazioneRegistrata
+        ? `✅ [PARTECIPA] ${cittadino.nome} ${cittadino.cognome} parteciperà alle attività.`
+        : `ℹ️ [GIÀ REGISTRATO] ${cittadino.nome} ${cittadino.cognome} risulta già tra i partecipanti.`,
     );
   } else {
     console.log(
@@ -114,7 +125,9 @@ const startupFittizia: IStartup = {
   descrizione: "Cucina tradizionale locale",
   serviziOfferti: ["Pranzo", "Cena", "Delivery"],
   incentiviRicevuti: [],
+  cittadiniPartecipanti: [],
   riceviIncentivo: () => {},
+  registraCittadinoPartecipante: () => false,
 };
 
 if (verificaIdoneita(startupFittizia, incentivo1)) {
