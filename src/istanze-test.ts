@@ -7,6 +7,7 @@ export const startup1: IStartup = new Startup(
   "Tecnologia sportiva",
   "Offriamo soluzioni innovative per migliorare le prestazioni degli atleti.",
   ["App di monitoraggio delle prestazioni per la corsa", "Sensori indossabili"],
+  ["monitoraggio", "dispositivi-indossabili"],
 );
 
 export const startup2: IStartup = new Startup(
@@ -17,6 +18,7 @@ export const startup2: IStartup = new Startup(
     "Piattaforma di allenamento personalizzato",
     "Dispositivi per il monitoraggio della salute",
   ],
+  ["app-fitness", "dispositivi-indossabili"],
 );
 
 export const startup3: IStartup = new Startup(
@@ -24,6 +26,7 @@ export const startup3: IStartup = new Startup(
   "Giochi e intrattenimento sportivo",
   "Creiamo esperienze di gioco interattive per incoraggiare l’attività fisica.",
   ["Giochi di realtà aumentata", "Piattaforme di gamification per il fitness"],
+  ["realtà-aumentata", "gamification-fitness"],
 );
 
 // Istanzia oggetti Incentivo per rappresentare i diversi incentivi statali disponibili per promuovere l'attività fisica.
@@ -31,30 +34,21 @@ export const incentivo1: IIncentivo = new Incentivo(
   "INC-001",
   "Incentivo per la promozione dell'attività fisica",
   1000,
-  [
-    "Partecipazione a eventi sportivi",
-    "Utilizzo di dispositivi di monitoraggio",
-  ],
+  ["eventi-sportivi", "monitoraggio"],
 );
 
 export const incentivo2: IIncentivo = new Incentivo(
   "INC-002",
   "Incentivo per lo sviluppo di applicazioni sportive",
   2000,
-  [
-    "Sviluppo di app per il fitness",
-    "Integrazione con dispositivi indossabili",
-  ],
+  ["app-fitness", "dispositivi-indossabili"],
 );
 
 export const incentivo3: IIncentivo = new Incentivo(
   "INC-003",
   "Incentivo per la creazione di giochi interattivi per il fitness",
   1500,
-  [
-    "Sviluppo di giochi di realtà aumentata",
-    "Integrazione con piattaforme di gamification",
-  ],
+  ["realtà-aumentata", "gamification-fitness"],
 );
 
 // Crea un'istanza della classe Cittadino per uno o più cittadini interessati a partecipare alle iniziative sportive.

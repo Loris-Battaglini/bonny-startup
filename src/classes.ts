@@ -1,8 +1,14 @@
-import type { IStartup, IIncentivo, ICittadino } from "./types";
+import type {
+  AreaSportiva,
+  IStartup,
+  IIncentivo,
+  ICittadino,
+} from "./types";
 
 export class Startup implements IStartup {
   nome: string;
   settore: string;
+  aree: AreaSportiva[];
   descrizione: string;
   serviziOfferti: string[];
 
@@ -14,9 +20,11 @@ export class Startup implements IStartup {
     settore: string,
     descrizione: string,
     serviziOfferti: string[],
+    aree: AreaSportiva[],
   ) {
     this.nome = nome;
     this.settore = settore;
+    this.aree = aree;
     this.descrizione = descrizione;
     this.serviziOfferti = serviziOfferti;
   }
@@ -33,7 +41,7 @@ export class Incentivo implements IIncentivo {
   codiceIdentificativo: string;
   descrizione: string;
   valoreIncentivo: number;
-  criteriDiIdoneita: string[];
+  criteriDiIdoneita: AreaSportiva[];
 
   // stato per atracciare assegnazione dell'incentivo
   startupAssegnata: IStartup[] = [];
@@ -42,7 +50,7 @@ export class Incentivo implements IIncentivo {
     codiceIdentificativo: string,
     descrizione: string,
     valoreIncentivo: number,
-    criteriDiIdoneita: string[],
+    criteriDiIdoneita: AreaSportiva[],
   ) {
     this.codiceIdentificativo = codiceIdentificativo;
     this.descrizione = descrizione;

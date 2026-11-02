@@ -16,27 +16,13 @@ import {
 
 console.log(" ESECUZIONE TEST BONNY STARTUP");
 
-// Controlla se almeno una parola chiave di un criterio dell'incentivo compare nel settore o servizi offerti dalla startup.
-
 const verificaIdoneita = (
   startup: IStartup,
   incentivo: IIncentivo,
 ): boolean => {
-  return incentivo.criteriDiIdoneita.some((criterio) => {
-    const paroleCriterio = criterio
-      .toLowerCase()
-      .split(" ")
-      .filter((p) => p.length > 3);
-
-    const matchSettore = paroleCriterio.some((parola) =>
-      startup.settore.toLowerCase().includes(parola),
-    );
-    const matchServizi = startup.serviziOfferti.some((servizio) =>
-      paroleCriterio.some((parola) => servizio.toLowerCase().includes(parola)),
-    );
-
-    return matchSettore || matchServizi;
-  });
+  return incentivo.criteriDiIdoneita.some((area) =>
+    startup.aree.includes(area),
+  );
 };
 
 // Verifica se il cittadino ha almeno un interesse affine ai servizi o al settore della startup
@@ -118,6 +104,7 @@ console.log("Test Negativo: Startup non idonea");
 const startupFittizia: IStartup = {
   nome: "Ristorante Da Mario",
   settore: "Ristorazione e Catering",
+  aree: [],
   descrizione: "Cucina tradizionale locale",
   serviziOfferti: ["Pranzo", "Cena", "Delivery"],
   incentiviRicevuti: [],

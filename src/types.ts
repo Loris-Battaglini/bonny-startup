@@ -1,7 +1,16 @@
+export type AreaSportiva =
+  | "eventi-sportivi"
+  | "monitoraggio"
+  | "app-fitness"
+  | "dispositivi-indossabili"
+  | "realtà-aumentata"
+  | "gamification-fitness";
+
 // Definisci un'interfaccia IStartup per rappresentare le startup innovative nel settore dello sport.
 export interface IStartup {
   nome: string;
   settore: string;
+  aree: AreaSportiva[];
   descrizione: string;
   serviziOfferti: string[];
   incentiviRicevuti: IIncentivo[];
@@ -14,7 +23,7 @@ export interface IIncentivo {
   codiceIdentificativo: string;
   descrizione: string;
   valoreIncentivo: number;
-  criteriDiIdoneita: string[];
+  criteriDiIdoneita: AreaSportiva[];
   startupAssegnata: IStartup[];
 
   // Metodo per assegnare l'incentivo a una startup qualificata.
