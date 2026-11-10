@@ -24,7 +24,7 @@ export const startup2: IStartup = new Startup(
 export const startup3: IStartup = new Startup(
   "ActivePlay Labs",
   "Giochi e intrattenimento sportivo",
-  "Creiamo esperienze di gioco interattive per incoraggiare l’attività fisica.",
+  "Creiamo esperienze di gioco interattive per incoraggiare l'attività fisica.",
   ["Giochi di realtà aumentata", "Piattaforme di gamification per il fitness"],
   ["realtà-aumentata", "gamification-fitness"],
 );
@@ -53,19 +53,13 @@ export const incentivo3: IIncentivo = new Incentivo(
 
 // Crea un'istanza della classe Cittadino per uno o più cittadini interessati a partecipare alle iniziative sportive.
 export const cittadino1: ICittadino = new Cittadino("Mario", "Rossi", 30, [
-  "Calcio",
-  "Corsa",
-  "Nuoto",
+  "eventi-sportivi",
+  "monitoraggio",
+  "dispositivi-indossabili",
 ]);
 
 export const cittadino2: ICittadino = new Cittadino("Giulia", "Bianchi", 25, [
-  "Yoga",
-  "Pilates",
-  "Ciclismo",
-]);
-
-export const cittadino3: ICittadino = new Cittadino("Luca", "Verdi", 35, [
-  "Basket",
-  "Football",
-  "Tennis",
+  "app-fitness",
+  "realtà-aumentata",
+  "gamification-fitness",
 ]);
