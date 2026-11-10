@@ -1,9 +1,4 @@
-import type {
-  AreaSportiva,
-  IStartup,
-  IIncentivo,
-  ICittadino,
-} from "./types";
+import type { AreaSportiva, IStartup, IIncentivo, ICittadino } from "./types";
 
 export class Startup implements IStartup {
   nome: string;
@@ -84,6 +79,11 @@ export class Incentivo implements IIncentivo {
       return false;
     }
 
+    // controlla se almeno un elemento dell'array startup.aree è incluso nell'array this.criteriDiIdoneita
+    if (!startup.aree.some((area) => this.criteriDiIdoneita.includes(area))) {
+      return false;
+    }
+
     this._startupAssegnata.push(startup);
     startup.riceviIncentivo(this);
     return true;
@@ -94,13 +94,13 @@ export class Cittadino implements ICittadino {
   nome: string;
   cognome: string;
   eta: number;
-  interessiSportivi: string[];
+  interessiSportivi: AreaSportiva[];
 
   constructor(
     nome: string,
     cognome: string,
     eta: number,
-    interessiSportivi: string[],
+    interessiSportivi: AreaSportiva[],
   ) {
     this.nome = nome;
     this.cognome = cognome;

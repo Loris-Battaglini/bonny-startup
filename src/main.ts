@@ -16,29 +16,14 @@ import {
 
 console.log(" ESECUZIONE TEST BONNY STARTUP");
 
-const verificaIdoneita = (
-  startup: IStartup,
-  incentivo: IIncentivo,
-): boolean => {
-  return incentivo.criteriDiIdoneita.some((area) =>
-    startup.aree.includes(area),
-  );
-};
-
 // Verifica se il cittadino ha almeno un interesse affine ai servizi o al settore della startup
 const verificaPartecipazione = (
   cittadino: ICittadino,
   startup: IStartup,
 ): boolean => {
-  return cittadino.interessiSportivi.some((interesse) => {
-    const interesseLower = interesse.toLowerCase();
-    const matchServizi = startup.serviziOfferti.some((servizio) =>
-      servizio.toLowerCase().includes(interesseLower),
-    );
-    const matchSettore = startup.settore.toLowerCase().includes(interesseLower);
-
-    return matchServizi || matchSettore;
-  });
+  return startup.aree.some((areaSportiva) =>
+    cittadino.interessiSportivi.includes(areaSportiva),
+  );
 };
 
 // TEST 1: ASSEGNAZIONE INCENTIVI
@@ -51,42 +36,36 @@ const testStartupIncentivi = [
 ];
 
 testStartupIncentivi.forEach(({ startup, incentivo }) => {
-  if (verificaIdoneita(startup, incentivo)) {
-    const assegnazioneCreata = incentivo.assegnaAStartup(startup);
-    const assegnazioneDuplicata = incentivo.assegnaAStartup(startup);
+  const assegnazioneCreata = incentivo.assegnaAStartup(startup);
+  const assegnazioneDuplicata = incentivo.assegnaAStartup(startup);
 
-    if (assegnazioneCreata) {
-      console.log(
-        `La startup ${startup.nome} ha ricevuto l'incentivo: ${incentivo.descrizione}`,
-      );
-      console.log(
-        `L'incentivo ${incentivo.descrizione} è stato assegnato alla startup: ${startup.nome}`,
-      );
-    }
-
-    const statoAggiornatoStartup =
-      startup.incentiviRicevuti.filter((ricevuto) => ricevuto === incentivo)
-        .length === 1;
-    const statoAggiornatoIncentivo =
-      incentivo.startupAssegnata.filter((assegnata) => assegnata === startup)
-        .length === 1;
-
-    if (
-      assegnazioneCreata &&
-      !assegnazioneDuplicata &&
-      statoAggiornatoStartup &&
-      statoAggiornatoIncentivo
-    ) {
-      console.log(
-        `✅ [OK & STATO] ${startup.nome} è idonea; l'assegnazione è stata registrata una sola volta su entrambi i lati.`,
-      );
-    } else {
-      console.log(`❌ [ERRORE] Lo stato negli array non è stato aggiornato.`);
-    }
-  } else {
+  if (assegnazioneCreata) {
     console.log(
-      `❌ [NO] ${startup.nome} non soddisfa i criteri per ${incentivo.descrizione}`,
+      `La startup ${startup.nome} ha ricevuto l'incentivo: ${incentivo.descrizione}`,
     );
+    console.log(
+      `L'incentivo ${incentivo.descrizione} è stato assegnato alla startup: ${startup.nome}`,
+    );
+  }
+
+  const statoAggiornatoStartup =
+    startup.incentiviRicevuti.filter((ricevuto) => ricevuto === incentivo)
+      .length === 1;
+  const statoAggiornatoIncentivo =
+    incentivo.startupAssegnata.filter((assegnata) => assegnata === startup)
+      .length === 1;
+
+  if (
+    assegnazioneCreata &&
+    !assegnazioneDuplicata &&
+    statoAggiornatoStartup &&
+    statoAggiornatoIncentivo
+  ) {
+    console.log(
+      `✅ [OK & STATO] ${startup.nome} è idonea; l'assegnazione è stata registrata una sola volta su entrambi i lati.`,
+    );
+  } else {
+    console.log(`❌ [ERRORE] Lo stato negli array non è stato aggiornato.`);
   }
 });
 
@@ -130,7 +109,7 @@ const startupFittizia: IStartup = {
   registraCittadinoPartecipante: () => false,
 };
 
-if (verificaIdoneita(startupFittizia, incentivo1)) {
+if (incentivo1.assegnaAStartup(startupFittizia)) {
   console.log(`✅ [OK] ${startupFittizia.nome} è idonea.`);
 } else {
   console.log(

@@ -36,7 +36,7 @@ export interface ICittadino {
   nome: string;
   cognome: string;
   eta: number;
-  interessiSportivi: string[];
+  interessiSportivi: AreaSportiva[];
 
   // per partecipare alle attività o utilizzare i prodotti/servizi offerti dalla startup.
   partecipaAttività(startup: IStartup): boolean;

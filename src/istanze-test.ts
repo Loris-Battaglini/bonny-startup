@@ -63,3 +63,9 @@ export const cittadino2: ICittadino = new Cittadino("Giulia", "Bianchi", 25, [
   "realtà-aumentata",
   "gamification-fitness",
 ]);
+
+export const cittadino3: ICittadino = new Cittadino("Luca", "Verdi", 35, [
+  "eventi-sportivi",
+  "monitoraggio",
+  "dispositivi-indossabili",
+]);
