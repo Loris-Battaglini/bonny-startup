@@ -4,11 +4,15 @@ export class Startup implements IStartup {
   readonly nome: string;
   readonly settore: string;
   readonly descrizione: string;
-  readonly serviziOfferti: readonly string[];
 
+  private readonly _serviziOfferti: readonly string[];
   private readonly _aree: readonly AreaSportiva[];
   private readonly _incentiviRicevuti: IIncentivo[] = [];
   private readonly _cittadiniPartecipanti: ICittadino[] = [];
+
+  get serviziOfferti(): readonly string[] {
+    return this._serviziOfferti;
+  }
 
   get aree(): readonly AreaSportiva[] {
     return this._aree;
@@ -32,8 +36,8 @@ export class Startup implements IStartup {
     this.nome = nome;
     this.settore = settore;
     this.descrizione = descrizione;
-    this.serviziOfferti = serviziOfferti;
-    this._aree = aree;
+    this._serviziOfferti = [...serviziOfferti];
+    this._aree = [...aree];
   }
 
   riceviIncentivo(incentivo: IIncentivo): void {
@@ -86,7 +90,7 @@ export class Incentivo implements IIncentivo {
     this.codiceIdentificativo = codiceIdentificativo;
     this.descrizione = descrizione;
     this.valoreIncentivo = valoreIncentivo;
-    this._criteriDiIdoneita = criteriDiIdoneita;
+    this._criteriDiIdoneita = [...criteriDiIdoneita];
   }
 
   assegnaAStartup(startup: IStartup): boolean {
@@ -110,7 +114,7 @@ export class Cittadino implements ICittadino {
   readonly cognome: string;
   readonly eta: number;
 
-  private readonly _interessiSportivi: AreaSportiva[];
+  private readonly _interessiSportivi: readonly AreaSportiva[];
 
   get interessiSportivi(): readonly AreaSportiva[] {
     return this._interessiSportivi;
@@ -120,12 +124,12 @@ export class Cittadino implements ICittadino {
     nome: string,
     cognome: string,
     eta: number,
-    interessiSportivi: AreaSportiva[],
+    interessiSportivi: readonly AreaSportiva[],
   ) {
     this.nome = nome;
     this.cognome = cognome;
     this.eta = eta;
-    this._interessiSportivi = interessiSportivi;
+    this._interessiSportivi = [...interessiSportivi];
   }
 
   partecipaAttività(startup: IStartup): boolean {

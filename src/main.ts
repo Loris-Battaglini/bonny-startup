@@ -1,5 +1,5 @@
 // interfacce
-import type { IStartup, ICittadino } from "./types";
+import type { IStartup } from "./types";
 
 // istanze
 import {
@@ -15,16 +15,6 @@ import {
 } from "./istanze-test";
 
 console.log(" ESECUZIONE TEST BONNY STARTUP");
-
-// Verifica se il cittadino ha almeno un interesse affine ai servizi o al settore della startup
-const verificaPartecipazione = (
-  cittadino: ICittadino,
-  startup: IStartup,
-): boolean => {
-  return startup.aree.some((areaSportiva) =>
-    cittadino.interessiSportivi.includes(areaSportiva),
-  );
-};
 
 // TEST 1: ASSEGNAZIONE INCENTIVI
 console.log("Test Idoneità e Assegnazione Incentivi");
@@ -73,24 +63,22 @@ testStartupIncentivi.forEach(({ startup, incentivo }) => {
 console.log("Test Partecipazione Cittadini alle Attività");
 
 const testCittadiniStartup = [
-  { cittadino: cittadino1, startup: startup1, nomeAttivita: "SportTech" },
-  { cittadino: cittadino2, startup: startup2, nomeAttivita: "FitLife" },
-  { cittadino: cittadino3, startup: startup3, nomeAttivita: "ActivePlay" },
+  { cittadino: cittadino1, startup: startup1 },
+  { cittadino: cittadino2, startup: startup2 },
+  { cittadino: cittadino3, startup: startup3 },
 ];
 
 testCittadiniStartup.forEach(({ cittadino, startup }) => {
-  if (verificaPartecipazione(cittadino, startup)) {
-    const partecipazioneRegistrata = cittadino.partecipaAttività(startup);
-    console.log(
-      partecipazioneRegistrata
-        ? `✅ [PARTECIPA] ${cittadino.nome} ${cittadino.cognome} parteciperà alle attività.`
-        : `ℹ️ [GIÀ REGISTRATO] ${cittadino.nome} ${cittadino.cognome} risulta già tra i partecipanti.`,
-    );
-  } else {
-    console.log(
-      `🤔 [NON PARTECIPA] ${cittadino.nome} ${cittadino.cognome} non ha interessi affini a ${startup.nome}.`,
-    );
-  }
+  const giàRegistrato = startup.cittadiniPartecipanti.includes(cittadino);
+  const partecipazioneRegistrata = cittadino.partecipaAttività(startup);
+
+  console.log(
+    partecipazioneRegistrata
+      ? `✅ [PARTECIPA] ${cittadino.nome} ${cittadino.cognome} parteciperà alle attività.`
+      : giàRegistrato
+        ? `ℹ️ [GIÀ REGISTRATO] ${cittadino.nome} ${cittadino.cognome} risulta già tra i partecipanti.`
+        : `🤔 [NON PARTECIPA] ${cittadino.nome} ${cittadino.cognome} non ha interessi affini a ${startup.nome}.`,
+  );
 });
 
 // TEST NEGATIVO (Per verificare l'esclusione e vedere la ❌)

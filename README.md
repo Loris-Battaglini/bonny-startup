@@ -12,13 +12,13 @@ Progetto didattico sviluppato in **TypeScript** e basato sui principi della Prog
 - `src/types.ts`: Contratti e interfacce del dominio (`IStartup`, `IIncentivo`, `ICittadino`).
 - `src/classes.ts`: Implementazione delle classi e gestione incapsulata dello stato in memoria.
 - `src/istanze-test.ts`: Dataset di prova con istanze di startup, incentivi e cittadini.
-- `src/main.ts`: Logica di business, funzioni di verifica (`verificaIdoneita`, `verificaPartecipazione`), test e controlli dello stato.
+- `src/main.ts`: Avvio degli esempi e verifica dei risultati tramite i metodi delle classi.
 
 ## 🔍 Caratteristiche Principali
 
 - **Gestione dello Stato OOP**: Tracciamento reale degli incentivi ricevuti dalle startup (`incentiviRicevuti`) e delle assegnazioni sugli incentivi (`startupAssegnata`).
-- **Verifica Idoneità**: Confronto esatto tra le aree sportive tipizzate dichiarate da startup e incentivi.
-- **Partecipazione Cittadini**: Match dinamico tra gli interessi sportivi dei cittadini e le attività offerte.
+- **Verifica Idoneità**: `Incentivo` assegna l'incentivo solo alle startup che condividono almeno un'area sportiva tipizzata (`AreaSportiva`) con i criteri di idoneità.
+- **Partecipazione Cittadini**: La partecipazione viene registrata dalla startup solo se cittadino e startup condividono almeno un'area sportiva tipizzata (`AreaSportiva`); il controllo è gestito dalle classi, non dal `main`.
 - **Controlli dello stato**: Le assegnazioni sono idempotenti e registrate su entrambi i lati; i cittadini partecipanti sono memorizzati presso la startup. Gli esiti vengono mostrati nella console.
 
 ## 🚀 Come Eseguire il Progetto
