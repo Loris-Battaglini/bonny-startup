@@ -1,14 +1,18 @@
 import type { AreaSportiva, IStartup, IIncentivo, ICittadino } from "./types";
 
 export class Startup implements IStartup {
-  nome: string;
-  settore: string;
-  aree: AreaSportiva[];
-  descrizione: string;
-  serviziOfferti: string[];
+  readonly nome: string;
+  readonly settore: string;
+  readonly descrizione: string;
+  readonly serviziOfferti: readonly string[];
 
+  private readonly _aree: readonly AreaSportiva[];
   private readonly _incentiviRicevuti: IIncentivo[] = [];
   private readonly _cittadiniPartecipanti: ICittadino[] = [];
+
+  get aree(): readonly AreaSportiva[] {
+    return this._aree;
+  }
 
   get incentiviRicevuti(): readonly IIncentivo[] {
     return this._incentiviRicevuti;
@@ -22,14 +26,14 @@ export class Startup implements IStartup {
     nome: string,
     settore: string,
     descrizione: string,
-    serviziOfferti: string[],
-    aree: AreaSportiva[],
+    serviziOfferti: readonly string[],
+    aree: readonly AreaSportiva[],
   ) {
     this.nome = nome;
     this.settore = settore;
-    this.aree = aree;
     this.descrizione = descrizione;
     this.serviziOfferti = serviziOfferti;
+    this._aree = aree;
   }
 
   riceviIncentivo(incentivo: IIncentivo): void {
@@ -45,18 +49,29 @@ export class Startup implements IStartup {
       return false;
     }
 
+    const interesseAffine = cittadino.interessiSportivi.some((interesse) =>
+      this._aree.includes(interesse),
+    );
+    if (!interesseAffine) {
+      return false;
+    }
+
     this._cittadiniPartecipanti.push(cittadino);
     return true;
   }
 }
 
 export class Incentivo implements IIncentivo {
-  codiceIdentificativo: string;
-  descrizione: string;
-  valoreIncentivo: number;
-  criteriDiIdoneita: AreaSportiva[];
+  readonly codiceIdentificativo: string;
+  readonly descrizione: string;
+  readonly valoreIncentivo: number;
 
+  private readonly _criteriDiIdoneita: readonly AreaSportiva[];
   private readonly _startupAssegnata: IStartup[] = [];
+
+  get criteriDiIdoneita(): readonly AreaSportiva[] {
+    return this._criteriDiIdoneita;
+  }
 
   get startupAssegnata(): readonly IStartup[] {
     return this._startupAssegnata;
@@ -66,12 +81,12 @@ export class Incentivo implements IIncentivo {
     codiceIdentificativo: string,
     descrizione: string,
     valoreIncentivo: number,
-    criteriDiIdoneita: AreaSportiva[],
+    criteriDiIdoneita: readonly AreaSportiva[],
   ) {
     this.codiceIdentificativo = codiceIdentificativo;
     this.descrizione = descrizione;
     this.valoreIncentivo = valoreIncentivo;
-    this.criteriDiIdoneita = criteriDiIdoneita;
+    this._criteriDiIdoneita = criteriDiIdoneita;
   }
 
   assegnaAStartup(startup: IStartup): boolean {
@@ -91,10 +106,15 @@ export class Incentivo implements IIncentivo {
 }
 
 export class Cittadino implements ICittadino {
-  nome: string;
-  cognome: string;
-  eta: number;
-  interessiSportivi: AreaSportiva[];
+  readonly nome: string;
+  readonly cognome: string;
+  readonly eta: number;
+
+  private readonly _interessiSportivi: AreaSportiva[];
+
+  get interessiSportivi(): readonly AreaSportiva[] {
+    return this._interessiSportivi;
+  }
 
   constructor(
     nome: string,
@@ -105,7 +125,7 @@ export class Cittadino implements ICittadino {
     this.nome = nome;
     this.cognome = cognome;
     this.eta = eta;
-    this.interessiSportivi = interessiSportivi;
+    this._interessiSportivi = interessiSportivi;
   }
 
   partecipaAttività(startup: IStartup): boolean {

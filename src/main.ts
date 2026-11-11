@@ -1,5 +1,5 @@
 // interfacce
-import type { IStartup, IIncentivo, ICittadino } from "./types";
+import type { IStartup, ICittadino } from "./types";
 
 // istanze
 import {

@@ -8,11 +8,11 @@ export type AreaSportiva =
 
 // Definisci un'interfaccia IStartup per rappresentare le startup innovative nel settore dello sport.
 export interface IStartup {
-  nome: string;
-  settore: string;
-  aree: AreaSportiva[];
-  descrizione: string;
-  serviziOfferti: string[];
+  readonly nome: string;
+  readonly settore: string;
+  readonly aree: readonly AreaSportiva[];
+  readonly descrizione: string;
+  readonly serviziOfferti: readonly string[];
   readonly incentiviRicevuti: readonly IIncentivo[];
   readonly cittadiniPartecipanti: readonly ICittadino[];
 
@@ -22,10 +22,10 @@ export interface IStartup {
 }
 
 export interface IIncentivo {
-  codiceIdentificativo: string;
-  descrizione: string;
-  valoreIncentivo: number;
-  criteriDiIdoneita: AreaSportiva[];
+  readonly codiceIdentificativo: string;
+  readonly descrizione: string;
+  readonly valoreIncentivo: number;
+  readonly criteriDiIdoneita: readonly AreaSportiva[];
   readonly startupAssegnata: readonly IStartup[];
 
   // Metodo per assegnare l'incentivo a una startup qualificata.
@@ -33,10 +33,10 @@ export interface IIncentivo {
 }
 
 export interface ICittadino {
-  nome: string;
-  cognome: string;
-  eta: number;
-  interessiSportivi: AreaSportiva[];
+  readonly nome: string;
+  readonly cognome: string;
+  readonly eta: number;
+  readonly interessiSportivi: readonly AreaSportiva[];
 
   // per partecipare alle attività o utilizzare i prodotti/servizi offerti dalla startup.
   partecipaAttività(startup: IStartup): boolean;
